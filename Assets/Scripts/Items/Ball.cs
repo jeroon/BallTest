@@ -12,8 +12,9 @@ public class Ball : Item
 	override public float MaxFood { get { return 10; } }
 	private float EatAmmount = .01f;
 	private float HealAmmount = .05f;
+	private float ViewDistance = 30;
 	private bool eating;
-
+	
 	#endregion
 
 	#region "Unity built-in methods"
@@ -28,12 +29,17 @@ public class Ball : Item
 
 		InfoPanel.SetTexts(Health, MaxHealth, Food, MaxFood, CurrentState);
 	}
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+
+	}
 	#endregion
 
 
 	public override void Live()
 	{
-		if(!eating)
+
 			Food -= .01f;
 		if (Food <= 0)
 		{
@@ -68,8 +74,8 @@ public class Ball : Item
 	{
 		if (Health <= 0)
 		{
+			Destroy(InfoPanel.gameObject);
 			Destroy(this.gameObject);
-			Destroy(InfoPanel);
 		}
 	}
 
@@ -85,6 +91,7 @@ public class Ball : Item
 			if (Health == MaxHealth)
 			{
 				AddToStates(State.Idle);
+				RemoveFromStates(State.NeedFood);
 				eating = false;
 			}
 			else

@@ -28,6 +28,7 @@ public class Manager : MonoBehaviour
 	#region "Unity built-in methods"
 	private void Awake()
 	{
+		Application.runInBackground = true;
 		if (StaticManager == null) StaticManager = this;
 		if (LogPanelTextField == null) LogPanelTextField = logPanelTextField;
 	}
@@ -44,23 +45,23 @@ public class Manager : MonoBehaviour
 	#endregion
 
 
-	private void CreateBall()
+	public void CreateBall()
 	{
 		Ball ball = Instantiate(ballPrefab);
 		InfoPanel infoPanel = Instantiate(infoPanelPrefab);
 		infoPanel.transform.parent = canvas.transform;
 		ball.InfoPanel = infoPanel;
-		ball.transform.position = new Vector3(8, 0, 1);
+		ball.transform.position = new Vector3(Random.Range(-20, 10), 0, Random.Range(-20, 10));
 	}
 
-	private void CreateTarget()
+	public void CreateTarget()
 	{
 		Box target= Instantiate(targetPrefab);
 		InfoPanel infoPanel = Instantiate(infoPanelPrefab);
 		infoPanel.transform.parent = canvas.transform;
 		infoPanel.gameObject.SetActive(false);
 		target.InfoPanel = infoPanel;
-		target.transform.position = new Vector3(Random.Range(-10,10), 0, Random.Range(-10, 10));
+		target.transform.position = new Vector3(Random.Range(-20,10), 0, Random.Range(-20, 10));
 		targetList.Add(target);
 	}
 

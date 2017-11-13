@@ -44,6 +44,10 @@ public abstract class Item : MonoBehaviour
 	{
 		CurrentStateAction();
 	}
+	protected virtual void OnDestroy()
+	{
+
+	}
 	#endregion
 
 	public abstract void DetermineState();
@@ -119,12 +123,20 @@ public abstract class Item : MonoBehaviour
 			if (IsInRange())
 			{
 				Eat();
-				
+				CurrentState = State.NeedFood;
 			}
 			else if (GetClosestTarget())
+			{
 				ChangePosition();
-
+				CurrentState = State.Move;
+			}
+			else
+			{
+				print("no target found");
+				CurrentState = State.Idle;
+			}
 		}
+		//else if()
 		
 		
 	}
